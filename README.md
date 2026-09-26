@@ -19,6 +19,7 @@ The main focus of this project is implementing the DevOps layer around a Java ap
 
 
 🐳 Docker containerization
+
 ☕ Java 21
 
 🍃 Spring Boot
@@ -26,10 +27,15 @@ The main focus of this project is implementing the DevOps layer around a Java ap
 🗄️ MySQL 8
 
 🔐 Environment-based database configuration
+
 🌐 Docker networking
+
 📦 Docker image & container management
+
 🔎 Application and database verification
+
 🔧 Git & GitHub
+
 🏗️ Architecture
 
 
@@ -59,16 +65,27 @@ The main focus of this project is implementing the DevOps layer around a Java ap
                 ┌────────┴────────┐
                 ▼                 ▼
            accounts          transactions
+
 🛠️ Technology Stack
 Technology	Usage
+
 ☕ Java 21	Application development
+
 🍃 Spring Boot	Backend application
+
 🐳 Docker	Containerization
+
 🗄️ MySQL 8	Database
+
 🐧 Linux	Development environment
+
 🔧 Git	Version control
+
 🐙 GitHub	Source code management
+
 📂 Project Structure
+
+
 AI-BankApp-DevOps/
 │
 ├── src/
@@ -85,6 +102,7 @@ AI-BankApp-DevOps/
 ├── 02-dashboard.png
 └── 03-application.png
 🐳 Docker
+
 Build Docker Image
 docker build -t ai-bankapp:latest .
 
@@ -92,6 +110,7 @@ Check the image:
 
 docker images
 🚀 Run Docker Container
+
 docker run -d \
   --name ai-bankapp \
   --add-host=host.docker.internal:host-gateway \
@@ -109,11 +128,13 @@ Option	Purpose
 -p 8080:8080	Map application port
 --add-host	Allow container to access host
 -e	Pass environment variables
+
 🌐 Application
 
 After starting the container:
 
 http://localhost:8080
+
 📸 Application Dashboard
 
 <p align="center"> <img src="01-dashboard.png" width="850"> </p>
@@ -132,6 +153,7 @@ Password	Environment Variable
 Docker communicates with MySQL through:
 
 host.docker.internal:3306
+
 🔐 Environment Variables
 
 Database credentials are passed to the container using environment variables:
@@ -185,12 +207,14 @@ SELECT * FROM accounts;
 <p align="center"> <img src="02-dashboard.png" width="850"> </p>
 
 🔍 Verification
+
 1️⃣ Check Container
 docker ps
 
 Expected container:
 
 ai-bankapp
+
 2️⃣ Check Application Logs
 docker logs ai-bankapp
 
@@ -200,6 +224,7 @@ Example:
 
 HikariPool-1 - Start completed.
 Database version: 8.0.46
+
 3️⃣ Verify Database
 mysql -u root -p
 
@@ -214,6 +239,8 @@ SELECT * FROM accounts;
 This confirms that application data is successfully stored in MySQL.
 
 🔄 Docker → MySQL Flow
+
+
 Browser
    │
    │ :8080
@@ -231,6 +258,7 @@ MySQL 8
    ▼
 bankappdb
 📸 Project Screenshots
+
 Dashboard
 
 <p align="center"> <img src="01-dashboard.png" width="900"> </p>
@@ -243,61 +271,17 @@ Application
 
 <p align="center"> <img src="03-application.png" width="900"> </p>
 
-💡 DevOps Concepts Practiced
 
-Through this project, I practiced:
-
-Dockerfile creation
-Docker image building
-Docker container management
-Port mapping
-Docker networking
-Environment variables
-MySQL connectivity
-MySQL user and permissions
-Container logs
-Application troubleshooting
-Git version control
-GitHub repository management
-🚀 Future Improvements
-
-Planned DevOps improvements:
-
-GitHub Actions
-      ↓
-CI/CD Pipeline
-      ↓
-Docker Image
-      ↓
-Security Scanning
-      ↓
-Container Registry
-      ↓
-Cloud Deployment
-
-Future implementation can include:
-
-GitHub Actions CI/CD
-Trivy security scanning
-Docker Hub / Amazon ECR
-AWS deployment
-Kubernetes
-Infrastructure as Code
-Monitoring & logging
-👨‍💻 Author
-
-<div align="center">
 
 Ankit Rawat
 
-DevOps | Telecom & GIS
+DevOps 
 
 GitHub
 Author
 
 Ankit Rawat
 
-DevOps / Telecom & GIS Professional
 
 GitHub:
 https://github.com/ankitrawat965465-cyber
