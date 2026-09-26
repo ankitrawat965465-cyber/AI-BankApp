@@ -1,0 +1,119 @@
+1. MySQL Root Login Failed
+
+Problem:
+Initially, I tried to access MySQL using:
+
+sudo mysql
+
+But MySQL returned:
+
+ERROR 1045 (28000): Access denied for user 'root'@'localhost'
+
+Cause:
+The MySQL root account was configured for password-based authentication, so login without a password was not allowed.
+
+Solution:
+I logged in using:
+
+mysql -u root -p
+
+After entering the MySQL root password, I was able to access the MySQL server successfully.
+
+2. Docker Container Could Not Connect to MySQL
+
+Problem:
+After running the Spring Boot application inside Docker, the application could not connect to MySQL.
+
+Cause:
+MySQL was initially listening only on:
+
+127.0.0.1:3306
+
+This allowed connections only from the local host. Since the Spring Boot application was running inside a Docker container, the container could not connect to MySQL through the host's localhost interface.
+
+Solution:
+I changed the MySQL configuration:
+
+bind-address = 0.0.0.0
+
+Then restarted MySQL:
+
+sudo systemctl restart mysql
+
+I verified the configuration using:
+
+sudo ss -lntp | grep 3306
+
+MySQL was then listening on:
+
+0.0.0.0:3306
+3. MySQL Rejected the Docker Container
+
+Problem:
+After making MySQL accessible, the Docker container still returned:
+
+Host '172.17.0.2' is not allowed to connect to this MySQL server
+
+Cause:
+The Docker container was connecting from the Docker network IP, but the MySQL user did not have permission to connect from that host.
+
+Solution:
+I created a dedicated MySQL user for the application:
+
+CREATE USER 'bankapp'@'%' IDENTIFIED BY '<your-password>';
+
+Then granted access to the application database:
+
+GRANT ALL PRIVILEGES ON bankappdb.* TO 'bankapp'@'%';
+
+Finally:
+
+FLUSH PRIVILEGES;
+
+This allowed the application user to access the bankappdb database from the Docker network.
+
+4. Docker localhost Was Pointing to the Wrong Machine
+
+Problem:
+The Spring Boot application was running inside Docker, while MySQL was running directly on the Linux host machine.
+
+Using:
+
+MYSQL_HOST=localhost
+
+did not work.
+
+Cause:
+Inside a Docker container, localhost refers to the container itself, not the host machine.
+
+Solution:
+I configured the container to access the host machine using:
+
+host.docker.internal
+
+I also added:
+
+--add-host=host.docker.internal:host-gateway
+
+The final configuration was:
+
+MYSQL_HOST=host.docker.internal
+MYSQL_PORT=3306
+MYSQL_DATABASE=bankappdb
+MYSQL_USER=bankapp
+MYSQL_PASSWORD=<your-password>
+
+After this configuration, the Spring Boot application successfully connected to MySQL running on the Linux host.
+
+Final Result
+Spring Boot Application
+        ↓
+Docker Container
+        ↓
+host.docker.internal
+        ↓
+MySQL on Linux Host
+        ↓
+bankappdb
+
+The connection was verified through Spring Boot/HikariCP logs, and application-created account data was successfully stored in MySQL.
