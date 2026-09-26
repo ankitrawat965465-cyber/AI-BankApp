@@ -20,8 +20,11 @@ The main focus of this project is implementing the DevOps layer around a Java ap
 
 🐳 Docker containerization
 ☕ Java 21
+
 🍃 Spring Boot
+
 🗄️ MySQL 8
+
 🔐 Environment-based database configuration
 🌐 Docker networking
 📦 Docker image & container management
