@@ -7,7 +7,7 @@ A high-performance, containerized financial platform built with Spring Boot 3, J
 [![Java Version](https://img.shields.io/badge/Java-21-blue.svg)](https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.1-brightgreen.svg)](https://spring.io/projects/spring-boot)
 
-![dashboard](home/ankit/Desktop/AI-bankapp.png)
+![dashboard](01-dashboard.png)
 
 </div>
 
