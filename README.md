@@ -6,12 +6,12 @@ A high-performance, containerized financial platform built with Spring Boot 3, J
 
 [![Java Version](https://img.shields.io/badge/Java-21-blue.svg)](https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.1-brightgreen.svg)](https://spring.io/projects/spring-boot)
-[![GitHub Actions](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-orange.svg)](.github/workflows/devsecops.yml)
-[![AWS OIDC](https://img.shields.io/badge/Security-OIDC-red.svg)](#phase-3-security-and-identity-configuration)
+
+![dashboard](home/ankit/Desktop/AI-bankapp.png)
 
 </div>
 
-![dashboard](screenshots/1.png)
+
 
 ---
 
