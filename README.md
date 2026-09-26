@@ -66,6 +66,7 @@ The main focus of this project is implementing the DevOps layer around a Java ap
                 ▼                 ▼
            accounts          transactions
 
+
 🛠️ Technology Stack
 Technology	Usage
 
@@ -86,6 +87,7 @@ Technology	Usage
 📂 Project Structure
 
 
+
 AI-BankApp-DevOps/
 │
 ├── src/
@@ -101,6 +103,7 @@ AI-BankApp-DevOps/
 ├── 01-dashboard.png
 ├── 02-dashboard.png
 └── 03-application.png
+
 🐳 Docker
 
 Build Docker Image
@@ -109,6 +112,7 @@ docker build -t ai-bankapp:latest .
 Check the image:
 
 docker images
+
 🚀 Run Docker Container
 
 docker run -d \
@@ -257,6 +261,8 @@ MySQL 8
    │
    ▼
 bankappdb
+
+
 📸 Project Screenshots
 
 Dashboard
