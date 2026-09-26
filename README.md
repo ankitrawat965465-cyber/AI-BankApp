@@ -17,6 +17,7 @@ AI BankApp is a Spring Boot banking application developed and containerized as a
 
 The main focus of this project is implementing the DevOps layer around a Java application:
 
+
 🐳 Docker containerization
 ☕ Java 21
 🍃 Spring Boot
@@ -27,6 +28,8 @@ The main focus of this project is implementing the DevOps layer around a Java ap
 🔎 Application and database verification
 🔧 Git & GitHub
 🏗️ Architecture
+
+
                     🌐 Browser
                         │
                         │ HTTP :8080
