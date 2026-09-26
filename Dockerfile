@@ -1,22 +1,21 @@
-# Build stage
-FROM eclipse-temurin:21-jdk-alpine AS build
+# Java 21 JDK base image use kar rahe hain
+FROM eclipse-temurin:21-jdk-jammy
+
+# Container ke andar /app ko working directory bana rahe hain
 WORKDIR /app
+
+# Current directory ki saari files container ke /app mein copy kar rahe hain
 COPY . .
+
+# Maven Wrapper ko executable permission de rahe hain
+# Phir application ko build/package kar rahe hain
+# -DskipTests = tests skip karo
+# -B = batch mode
 RUN chmod +x mvnw && ./mvnw clean package -DskipTests -B
 
-# Run stage - alpine has significantly fewer CVEs than ubuntu/jammy
-FROM eclipse-temurin:21-jre-alpine
-WORKDIR /app
-
-# Pull latest security patches for OS libraries
-RUN apk update && apk upgrade --no-cache
-
-# Create a non-root user for security (Alpine uses addgroup/adduser instead of groupadd/useradd)
-RUN addgroup -S devsecops && adduser -S -G devsecops devsecops
-USER devsecops
-
-# Copy only the built artifact
-COPY --from=build /app/target/*.jar app.jar
-
+# Application ke liye port 8080 indicate kar rahe hain
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+
+# Container start hone par Java JAR application run hogi
+# sh -c ka use *.jar wildcard ko expand karne ke liye kiya hai
+ENTRYPOINT ["sh", "-c", "java -jar target/*.jar"]
