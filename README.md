@@ -11,65 +11,58 @@ A Spring Boot banking application containerized and configured with MySQL for lo
 
 </div>
 
-Project Overview
+📌 Project Overview
 
-AI BankApp is a Spring Boot banking application that has been containerized using Docker.
+AI BankApp is a Spring Boot banking application developed and containerized as a practical DevOps project.
 
-The application runs inside a Docker container while MySQL runs on the host machine. The container communicates with the host MySQL server using:
+The main focus of this project is implementing the DevOps layer around a Java application:
 
-host.docker.internal
-
-The database configuration is passed to the application through environment variables instead of storing the database password directly in the Git repository.
-
-Main DevOps Concepts Implemented
-Java 21 application
-Spring Boot application
-Docker image creation
-Docker container management
-Docker networking
-Environment variables
-MySQL 8 database connectivity
-Separate MySQL application user
-Database permissions
-Container logs and troubleshooting
-Application and database verification
-Git and GitHub version control
-Architecture
-                    Browser
-                       |
-                       | HTTP :8080
-                       |
-                       v
-              +-------------------+
-              |   Docker Container |
-              |                   |
-              | Spring Boot App   |
-              |     Java 21       |
-              +---------+---------+
-                        |
-                        | host.docker.internal:3306
-                        |
-                        v
-              +-------------------+
-              |   MySQL 8         |
-              | Host Machine      |
-              +---------+---------+
-                        |
-                        v
-                    bankappdb
-                   /         \
-                  /           \
-           accounts       transactions
-Technology Stack
-Technology	Purpose
-Java 21	Application runtime
-Spring Boot	Backend application
-MySQL 8	Database
-Docker	Application containerization
-Git	Version control
-GitHub	Source code repository
-Linux	Development environment
-Project Structure
+🐳 Docker containerization
+☕ Java 21
+🍃 Spring Boot
+🗄️ MySQL 8
+🔐 Environment-based database configuration
+🌐 Docker networking
+📦 Docker image & container management
+🔎 Application and database verification
+🔧 Git & GitHub
+🏗️ Architecture
+                    🌐 Browser
+                        │
+                        │ HTTP :8080
+                        ▼
+              ┌─────────────────────┐
+              │   Docker Container  │
+              │                     │
+              │   Spring Boot App   │
+              │      Java 21        │
+              └──────────┬──────────┘
+                         │
+                         │ host.docker.internal:3306
+                         ▼
+              ┌─────────────────────┐
+              │      MySQL 8        │
+              │    Host Machine     │
+              └──────────┬──────────┘
+                         │
+                         ▼
+                    ┌──────────┐
+                    │bankappdb │
+                    └────┬─────┘
+                         │
+                ┌────────┴────────┐
+                ▼                 ▼
+           accounts          transactions
+🛠️ Technology Stack
+Technology	Usage
+☕ Java 21	Application development
+🍃 Spring Boot	Backend application
+🐳 Docker	Containerization
+🗄️ MySQL 8	Database
+🐧 Linux	Development environment
+🔧 Git	Version control
+🐙 GitHub	Source code management
+📂 Project Structure
 AI-BankApp-DevOps/
 │
 ├── src/
@@ -85,24 +78,14 @@ AI-BankApp-DevOps/
 ├── 01-dashboard.png
 ├── 02-dashboard.png
 └── 03-application.png
-Docker Implementation
-Docker Image
-
-The application is packaged into a Docker image:
-
+🐳 Docker
+Build Docker Image
 docker build -t ai-bankapp:latest .
 
-Verify the image:
+Check the image:
 
 docker images
-
-Expected image:
-
-ai-bankapp
-Running the Container
-
-The application container is started using:
-
+🚀 Run Docker Container
 docker run -d \
   --name ai-bankapp \
   --add-host=host.docker.internal:host-gateway \
@@ -113,47 +96,39 @@ docker run -d \
   -e MYSQL_USER=bankapp \
   -e MYSQL_PASSWORD=<your-password> \
   ai-bankapp:latest
-What these options do
+Docker Options
 Option	Purpose
--d	Runs container in background
---name ai-bankapp	Gives the container a name
--p 8080:8080	Maps host port 8080 to container port 8080
---add-host	Allows the container to reach the host machine
--e	Passes environment variables
-MYSQL_HOST	MySQL hostname
-MYSQL_DATABASE	Database name
-MYSQL_USER	Application database user
-MYSQL_PASSWORD	Database password
-Application
+-d	Run container in background
+--name	Set container name
+-p 8080:8080	Map application port
+--add-host	Allow container to access host
+-e	Pass environment variables
+🌐 Application
 
-After starting the container, open:
+After starting the container:
 
 http://localhost:8080
+📸 Application Dashboard
 
-The Spring Boot application is served from the Docker container.
+<p align="center"> <img src="01-dashboard.png" width="850"> </p>
 
-Application Screenshot
+🗄️ Database Configuration
 
-
-
-
-Database Configuration
-
-The application uses MySQL 8.
+The application uses MySQL 8 running on the host machine.
 
 Configuration	Value
-Database Host	host.docker.internal
-Database Port	3306
-Database Name	bankappdb
-Database User	bankapp
-Password	Supplied through environment variable
+Host	host.docker.internal
+Port	3306
+Database	bankappdb
+User	bankapp
+Password	Environment Variable
 
-The Docker container connects to MySQL running on the host machine through:
+Docker communicates with MySQL through:
 
 host.docker.internal:3306
-Environment Variables
+🔐 Environment Variables
 
-Database configuration is supplied using environment variables:
+Database credentials are passed to the container using environment variables:
 
 MYSQL_HOST=host.docker.internal
 MYSQL_PORT=3306
@@ -163,150 +138,155 @@ MYSQL_PASSWORD=<your-password>
 
 The database password is not stored directly in the Git repository.
 
-This allows the same application image to be used with different database credentials without modifying the application source code.
+This keeps credentials separate from the application source code.
 
-MySQL User Configuration
+👤 MySQL Application User
 
-A separate MySQL user was created for the application instead of using the root account.
+A separate MySQL user was created for the application:
 
 CREATE USER 'bankapp'@'%' IDENTIFIED BY '<your-password>';
 
-GRANT ALL PRIVILEGES ON bankappdb.* TO 'bankapp'@'%';
+GRANT ALL PRIVILEGES
+ON bankappdb.*
+TO 'bankapp'@'%';
 
 FLUSH PRIVILEGES;
 
-This user is used by the Dockerized Spring Boot application to access:
+The Spring Boot application uses this user to access the database.
+
+🗃️ Database Structure
+
+Database:
 
 bankappdb
-Database Structure
 
-The application database is:
-
-bankappdb
-
-Main tables:
+Tables:
 
 accounts
 transactions
 
-The accounts table stores banking account information.
+Check tables:
 
-The transactions table is used for transaction-related information.
+USE bankappdb;
 
-Database Screenshot
+SHOW TABLES;
 
+Check stored account data:
 
+SELECT * FROM accounts;
+📸 Database
 
+<p align="center"> <img src="02-dashboard.png" width="850"> </p>
 
-Verification & Testing
-1. Check Docker Container
+🔍 Verification
+1️⃣ Check Container
 docker ps
 
-The application container should be running:
+Expected container:
 
 ai-bankapp
-2. Check Application Logs
+2️⃣ Check Application Logs
 docker logs ai-bankapp
 
-Successful database connectivity can be verified through the Spring Boot and HikariCP logs.
+Successful database connectivity can be verified through the application logs.
 
 Example:
 
 HikariPool-1 - Start completed.
 Database version: 8.0.46
-3. Check MySQL Database
-
-Login to MySQL:
-
+3️⃣ Verify Database
 mysql -u root -p
 
-Select the application database:
+Then:
 
 USE bankappdb;
 
-Check the tables:
-
 SHOW TABLES;
-
-Expected tables:
-
-accounts
-transactions
-
-Check account data:
 
 SELECT * FROM accounts;
 
-This verifies that data created through the Spring Boot application is successfully stored in MySQL.
+This confirms that application data is successfully stored in MySQL.
 
-Docker → MySQL Connectivity
-
-The complete flow is:
-
+🔄 Docker → MySQL Flow
 Browser
-   |
-   | :8080
-   v
-Docker Container
-   |
-   | Spring Boot
-   |
-   | host.docker.internal:3306
-   v
-MySQL Host Machine
-   |
-   v
+   │
+   │ :8080
+   ▼
+Spring Boot
+   │
+   │ Docker Container
+   ▼
+host.docker.internal
+   │
+   │ :3306
+   ▼
+MySQL 8
+   │
+   ▼
 bankappdb
+📸 Project Screenshots
+Dashboard
 
-This setup demonstrates communication between a containerized application and a database running outside the container.
-
-Screenshots
-Application Dashboard
-
-
-
+<p align="center"> <img src="01-dashboard.png" width="900"> </p>
 
 Database
 
-
-
+<p align="center"> <img src="02-dashboard.png" width="900"> </p>
 
 Application
 
+<p align="center"> <img src="03-application.png" width="900"> </p>
 
-
-
-What I Learned From This Project
+💡 DevOps Concepts Practiced
 
 Through this project, I practiced:
 
-Creating and modifying a Dockerfile
-Building Docker images
-Running Docker containers
+Dockerfile creation
+Docker image building
+Docker container management
 Port mapping
-Docker-to-host networking
-Using environment variables for configuration
-Connecting a containerized Spring Boot application to MySQL
-Creating a dedicated MySQL application user
-Managing MySQL permissions
-Checking Docker logs
-Troubleshooting database connectivity
-Verifying application data in MySQL
-Using Git and GitHub for version control
-Future Improvements
+Docker networking
+Environment variables
+MySQL connectivity
+MySQL user and permissions
+Container logs
+Application troubleshooting
+Git version control
+GitHub repository management
+🚀 Future Improvements
 
-The project can be extended with additional DevOps practices such as:
+Planned DevOps improvements:
 
-CI/CD using GitHub Actions
-Docker image security scanning
-Docker image publishing
+GitHub Actions
+      ↓
+CI/CD Pipeline
+      ↓
+Docker Image
+      ↓
+Security Scanning
+      ↓
+Container Registry
+      ↓
+Cloud Deployment
+
+Future implementation can include:
+
+GitHub Actions CI/CD
+Trivy security scanning
+Docker Hub / Amazon ECR
 AWS deployment
+Kubernetes
 Infrastructure as Code
-Kubernetes deployment
-Monitoring and logging
+Monitoring & logging
+👨‍💻 Author
 
-These are planned improvements and are not part of the current implementation.
+<div align="center">
 
+Ankit Rawat
+
+DevOps | Telecom & GIS
+
+GitHub
 Author
 
 Ankit Rawat
